@@ -6,8 +6,10 @@
   "scripts": {
     "start": "node server/server.js",
     "dev": "node server/server.js",
-    "desktop": "electron .",
-    "dist": "electron-builder --win portable"
+    "desktop": "set ELECTRON_RUN_AS_NODE=&& electron .",
+    "dist": "electron-builder --win portable",
+    "sqlite:electron": "cd node_modules/better-sqlite3 && node ../prebuild-install/bin.js -r electron -t 33.4.11",
+    "sqlite:node": "cd node_modules/better-sqlite3 && node ../prebuild-install/bin.js -r node -t 20.20.0"
   },
   "dependencies": {
     "better-sqlite3": "^11.10.0",

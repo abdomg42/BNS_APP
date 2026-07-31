@@ -7,13 +7,40 @@ const path = require('path');
 const fs = require('fs');
 const Database = require('better-sqlite3');
 
-const DB_DIR = path.join(__dirname, '..', '..', 'database');
+let DB_DIR;
+
+try {
+    // Running inside Electron
+    const { app } = require('electron');
+
+    if (app && app.isPackaged) {
+        DB_DIR = path.join(app.getPath('userData'), 'database');
+    } else {
+        DB_DIR = path.join(__dirname, '..', '..', 'database');
+    }
+} catch {
+    // Running outside Electron (development)
+    DB_DIR = path.join(__dirname, '..', '..', 'database');
+}
+
+if (!fs.existsSync(DB_DIR)) {
+    fs.mkdirSync(DB_DIR, { recursive: true });
+}
+
 const DB_PATH = path.join(DB_DIR, 'stock.db');
 
-// S'assurer que le dossier existe
-if (!fs.existsSync(DB_DIR)) fs.mkdirSync(DB_DIR, { recursive: true });
-
 const db = new Database(DB_PATH);
+// const path = require('path');
+// const fs = require('fs');
+// const Database = require('better-sqlite3');
+
+// const DB_DIR = path.join(__dirname, '..', '..', 'database');
+// const DB_PATH = path.join(DB_DIR, 'stock.db');
+
+// // S'assurer que le dossier existe
+// if (!fs.existsSync(DB_DIR)) fs.mkdirSync(DB_DIR, { recursive: true });
+
+// const db = new Database(DB_PATH);
 db.pragma('journal_mode = WAL');   // meilleures performances
 db.pragma('foreign_keys = ON');    // clés étrangères actives
 
