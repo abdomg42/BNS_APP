@@ -1,0 +1,38 @@
+{
+  "name": "bns-stock-manager",
+  "version": "1.0.0",
+  "description": "BNS Stock Manager - Application de gestion de stock pour petits commerces",
+  "main": "desktop/main.js",
+  "scripts": {
+    "start": "node server/server.js",
+    "dev": "node server/server.js",
+    "desktop": "electron .",
+    "dist": "electron-builder --win portable"
+  },
+  "dependencies": {
+    "better-sqlite3": "^11.10.0",
+    "express": "^4.21.2"
+  },
+  "devDependencies": {
+    "electron": "^33.4.0",
+    "electron-builder": "^24.13.3"
+  },
+  "build": {
+    "appId": "com.bns.stockmanager",
+    "productName": "BNS Stock Manager",
+    "directories": { "output": "dist" },
+    "files": [
+      "desktop/**/*",
+      "server/**/*",
+      "css/**/*",
+      "js/**/*",
+      "uploads/images/logo.png",
+      "*.html",
+      "package.json"
+    ],
+    "win": {
+      "target": "portable",
+      "icon": "uploads/images/logo.png"
+    }
+  }
+}

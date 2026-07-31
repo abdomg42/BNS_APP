@@ -1,0 +1,412 @@
+/* ============================================================
+   style.css — Styles globaux : layout, sidebar, topbar,
+   boutons, formulaires, badges, toasts, responsive.
+   Palette : bleu / blanc / gris clair. Police : Segoe UI.
+   ============================================================ */
+
+:root {
+  --blue: #1e6fd9;
+  --blue-dark: #155bb5;
+  --blue-light: #e8f1fd;
+  --white: #ffffff;
+  --gray-50: #f5f7fa;
+  --gray-100: #eef1f5;
+  --gray-200: #dde3ea;
+  --gray-400: #9aa5b1;
+  --gray-600: #5b6672;
+  --gray-800: #2b333c;
+  --green: #1d9d63;
+  --red: #d94848;
+  --orange: #e08a1e;
+  --radius: 10px;
+  --shadow: 0 2px 8px rgba(30, 60, 120, .08);
+  --sidebar-w: 240px;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Segoe UI', 'Poppins', Tahoma, sans-serif;
+  background: var(--gray-50);
+  color: var(--gray-800);
+  font-size: 14px;
+}
+
+/* ---------- Layout ---------- */
+.layout { display: flex; min-height: 100vh; }
+
+.main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.content {
+  padding: 24px;
+  animation: fadeIn .25s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* ---------- Sidebar ---------- */
+.sidebar {
+  width: var(--sidebar-w);
+  background: linear-gradient(180deg, var(--blue) 0%, var(--blue-dark) 100%);
+  color: var(--white);
+  display: flex;
+  flex-direction: column;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  flex-shrink: 0;
+  transition: margin-left .25s ease;
+  z-index: 50;
+}
+
+.sidebar-logo {
+  padding: 20px 16px;
+  text-align: center;
+  border-bottom: 1px solid rgba(255, 255, 255, .15);
+}
+
+.sidebar-logo img {
+  max-width: 150px;
+  max-height: 70px;
+  background: var(--white);
+  border-radius: 8px;
+  padding: 6px 10px;
+  object-fit: contain;
+}
+
+.sidebar-logo .app-name {
+  margin-top: 10px;
+  font-weight: 600;
+  font-size: 15px;
+  letter-spacing: .3px;
+}
+
+.sidebar nav { padding: 12px 0; overflow-y: auto; flex: 1; }
+
+.nav-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 11px 20px;
+  color: rgba(255, 255, 255, .82);
+  text-decoration: none;
+  font-size: 14px;
+  border-left: 3px solid transparent;
+  transition: background .15s ease, color .15s ease;
+}
+
+.nav-link svg { width: 18px; height: 18px; flex-shrink: 0; }
+
+.nav-link:hover { background: rgba(255, 255, 255, .10); color: var(--white); }
+
+.nav-link.active {
+  background: rgba(255, 255, 255, .16);
+  color: var(--white);
+  border-left-color: var(--white);
+  font-weight: 600;
+}
+
+.sidebar-footer {
+  padding: 14px 20px;
+  font-size: 11px;
+  color: rgba(255, 255, 255, .55);
+  border-top: 1px solid rgba(255, 255, 255, .15);
+}
+
+/* ---------- Topbar ---------- */
+.topbar {
+  background: var(--white);
+  border-bottom: 1px solid var(--gray-200);
+  padding: 14px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  position: sticky;
+  top: 0;
+  z-index: 40;
+}
+
+.topbar h1 { font-size: 19px; font-weight: 600; }
+
+.topbar-right { display: flex; align-items: center; gap: 14px; }
+
+.burger {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 6px;
+}
+
+.burger svg { width: 22px; height: 22px; stroke: var(--gray-600); }
+
+/* Badge alerte stock */
+.alert-bell {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--blue-light);
+  color: var(--blue-dark);
+  border: none;
+  border-radius: 20px;
+  padding: 7px 14px;
+  cursor: pointer;
+  font-size: 13px;
+  text-decoration: none;
+  transition: background .15s;
+}
+.alert-bell:hover { background: #d7e6fc; }
+.alert-bell.danger { background: #fdeaea; color: var(--red); }
+.alert-bell svg { width: 16px; height: 16px; }
+.alert-count {
+  background: var(--red);
+  color: #fff;
+  border-radius: 10px;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 1px 7px;
+}
+
+/* ---------- Boutons ---------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  border: none;
+  border-radius: 8px;
+  padding: 9px 16px;
+  font-size: 13.5px;
+  font-family: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background .15s ease, transform .1s ease, box-shadow .15s;
+}
+.btn:active { transform: scale(.97); }
+.btn svg { width: 15px; height: 15px; }
+
+.btn-primary { background: var(--blue); color: #fff; box-shadow: var(--shadow); }
+.btn-primary:hover { background: var(--blue-dark); }
+
+.btn-outline {
+  background: var(--white);
+  color: var(--blue);
+  border: 1.5px solid var(--blue);
+}
+.btn-outline:hover { background: var(--blue-light); }
+
+.btn-light { background: var(--gray-100); color: var(--gray-800); }
+.btn-light:hover { background: var(--gray-200); }
+
+.btn-danger { background: var(--red); color: #fff; }
+.btn-danger:hover { background: #b93a3a; }
+
+.btn-success { background: var(--green); color: #fff; }
+.btn-success:hover { background: #177d4f; }
+
+.btn-sm { padding: 6px 10px; font-size: 12.5px; border-radius: 6px; }
+
+/* Boutons d'action dans les tableaux */
+.icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  background: var(--gray-100);
+  color: var(--gray-600);
+  transition: background .12s, color .12s;
+}
+.icon-btn svg { width: 15px; height: 15px; }
+.icon-btn:hover { background: var(--blue-light); color: var(--blue); }
+.icon-btn.danger:hover { background: #fdeaea; color: var(--red); }
+
+/* ---------- Cartes & panneaux ---------- */
+.card {
+  background: var(--white);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 20px;
+}
+
+.card + .card { margin-top: 20px; }
+
+.card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.card-header h2 { font-size: 16px; font-weight: 600; }
+
+/* ---------- Barre d'outils (recherche / filtres) ---------- */
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.search-box { position: relative; }
+.search-box svg {
+  position: absolute;
+  left: 10px; top: 50%;
+  transform: translateY(-50%);
+  width: 15px; height: 15px;
+  stroke: var(--gray-400);
+  pointer-events: none;
+}
+.search-box input { padding-left: 32px; }
+
+/* ---------- Formulaires ---------- */
+input, select, textarea {
+  font-family: inherit;
+  font-size: 13.5px;
+  color: var(--gray-800);
+  background: var(--white);
+  border: 1.5px solid var(--gray-200);
+  border-radius: 8px;
+  padding: 9px 12px;
+  outline: none;
+  transition: border-color .15s, box-shadow .15s;
+  width: 100%;
+}
+input:focus, select:focus, textarea:focus {
+  border-color: var(--blue);
+  box-shadow: 0 0 0 3px rgba(30, 111, 217, .12);
+}
+textarea { resize: vertical; min-height: 70px; }
+
+.form-group { margin-bottom: 14px; }
+.form-group label {
+  display: block;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--gray-600);
+  margin-bottom: 5px;
+}
+.form-group .required::after { content: ' *'; color: var(--red); }
+
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+.field-error { border-color: var(--red) !important; }
+
+/* Aperçu image */
+.img-preview {
+  width: 90px; height: 90px;
+  border: 1.5px dashed var(--gray-200);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: var(--gray-50);
+  color: var(--gray-400);
+  font-size: 11px;
+  text-align: center;
+}
+.img-preview img { width: 100%; height: 100%; object-fit: cover; }
+
+/* ---------- Badges ---------- */
+.badge {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 12px;
+  font-size: 11.5px;
+  font-weight: 600;
+}
+.badge-green  { background: #e3f6ee; color: var(--green); }
+.badge-red    { background: #fdeaea; color: var(--red); }
+.badge-orange { background: #fdf1e0; color: var(--orange); }
+.badge-blue   { background: var(--blue-light); color: var(--blue-dark); }
+.badge-gray   { background: var(--gray-100); color: var(--gray-600); }
+
+/* ---------- Toast ---------- */
+#toast-root {
+  position: fixed;
+  bottom: 24px; right: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 9999;
+}
+.toast {
+  background: var(--gray-800);
+  color: #fff;
+  padding: 12px 18px;
+  border-radius: 8px;
+  font-size: 13.5px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, .18);
+  animation: toastIn .25s ease;
+  max-width: 340px;
+}
+.toast.success { background: var(--green); }
+.toast.error   { background: var(--red); }
+@keyframes toastIn {
+  from { opacity: 0; transform: translateX(30px); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* ---------- Divers ---------- */
+.empty-state {
+  text-align: center;
+  padding: 40px 20px;
+  color: var(--gray-400);
+}
+.empty-state svg { width: 44px; height: 44px; margin-bottom: 10px; stroke: var(--gray-200); }
+
+.muted { color: var(--gray-400); font-size: 12.5px; }
+.text-right { text-align: right; }
+.text-danger { color: var(--red); font-weight: 600; }
+.text-success { color: var(--green); font-weight: 600; }
+
+.thumb {
+  width: 42px; height: 42px;
+  border-radius: 8px;
+  object-fit: cover;
+  background: var(--gray-100);
+  border: 1px solid var(--gray-200);
+}
+.thumb-placeholder {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px; height: 42px;
+  border-radius: 8px;
+  background: var(--blue-light);
+  color: var(--blue);
+  font-weight: 700;
+  font-size: 15px;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 900px) {
+  .sidebar { position: fixed; left: 0; margin-left: calc(-1 * var(--sidebar-w)); }
+  .sidebar.open { margin-left: 0; box-shadow: 4px 0 20px rgba(0, 0, 0, .25); }
+  .burger { display: inline-flex; }
+  .content { padding: 16px; }
+  .form-row { grid-template-columns: 1fr; }
+}
+
+/* ---------- Impression : seul le document est imprimé ---------- */
+@media print {
+  body * { visibility: hidden; }
+  .print-area, .print-area * { visibility: visible; }
+  .print-area { position: absolute; inset: 0; }
+}

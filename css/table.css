@@ -1,0 +1,76 @@
+/* ============================================================
+   table.css — Tableaux modernes + tri + pagination.
+   ============================================================ */
+
+.table-wrap { overflow-x: auto; border-radius: var(--radius); }
+
+table.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--white);
+}
+
+.data-table thead th {
+  background: var(--gray-50);
+  color: var(--gray-600);
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .4px;
+  text-align: left;
+  padding: 12px 14px;
+  border-bottom: 2px solid var(--gray-200);
+  white-space: nowrap;
+  user-select: none;
+}
+
+/* Colonnes triables */
+.data-table th.sortable { cursor: pointer; }
+.data-table th.sortable:hover { color: var(--blue); background: var(--blue-light); }
+.data-table th .sort-arrow { font-size: 10px; margin-left: 5px; opacity: .55; }
+
+.data-table tbody td {
+  padding: 11px 14px;
+  border-bottom: 1px solid var(--gray-100);
+  vertical-align: middle;
+}
+
+.data-table tbody tr { transition: background .12s ease; }
+.data-table tbody tr:hover { background: var(--blue-light); }
+.data-table tbody tr:last-child td { border-bottom: none; }
+
+/* Ligne en alerte de stock */
+.data-table tr.row-low { background: #fffaf2; }
+.data-table tr.row-low:hover { background: #fdf1e0; }
+
+.data-table .actions { display: flex; gap: 6px; justify-content: flex-end; }
+
+/* ---------- Pagination ---------- */
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding-top: 14px;
+}
+
+.pagination-info { font-size: 12.5px; color: var(--gray-600); }
+
+.pagination-buttons { display: flex; gap: 5px; }
+
+.page-btn {
+  min-width: 32px;
+  height: 32px;
+  border: 1.5px solid var(--gray-200);
+  background: var(--white);
+  color: var(--gray-600);
+  border-radius: 7px;
+  font-size: 13px;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all .12s ease;
+}
+.page-btn:hover:not(:disabled) { border-color: var(--blue); color: var(--blue); }
+.page-btn.active { background: var(--blue); border-color: var(--blue); color: #fff; font-weight: 600; }
+.page-btn:disabled { opacity: .4; cursor: not-allowed; }

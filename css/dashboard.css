@@ -1,0 +1,63 @@
+/* ============================================================
+   dashboard.css — Cartes statistiques du tableau de bord.
+   ============================================================ */
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+  gap: 16px;
+  margin-bottom: 22px;
+}
+
+.stat-card {
+  background: var(--white);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 18px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+.stat-card:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(30, 60, 120, .12); }
+
+.stat-icon {
+  width: 48px; height: 48px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.stat-icon svg { width: 22px; height: 22px; }
+.stat-icon.blue   { background: var(--blue-light); color: var(--blue); }
+.stat-icon.orange { background: #fdf1e0; color: var(--orange); }
+.stat-icon.green  { background: #e3f6ee; color: var(--green); }
+.stat-icon.purple { background: #efe8fd; color: #7a4fd0; }
+.stat-icon.red    { background: #fdeaea; color: var(--red); }
+.stat-icon.teal   { background: #e0f5f4; color: #14958f; }
+
+.stat-info .stat-value {
+  font-size: 21px;
+  font-weight: 700;
+  line-height: 1.15;
+}
+.stat-info .stat-label {
+  font-size: 12px;
+  color: var(--gray-600);
+}
+
+/* Section liste des produits en stock faible */
+.low-stock-list { display: flex; flex-direction: column; gap: 8px; }
+
+.low-stock-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 10px 14px;
+  background: var(--gray-50);
+  border-radius: 8px;
+  border-left: 3px solid var(--orange);
+}
+.low-stock-item.critical { border-left-color: var(--red); }

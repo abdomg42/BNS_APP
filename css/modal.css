@@ -1,0 +1,105 @@
+/* ============================================================
+   modal.css — Fenêtres modales + animations.
+   ============================================================ */
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(30, 40, 60, .45);
+  backdrop-filter: blur(2px);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 40px 16px;
+  overflow-y: auto;
+  z-index: 1000;
+  animation: overlayIn .2s ease;
+}
+
+@keyframes overlayIn { from { opacity: 0; } to { opacity: 1; } }
+
+.modal {
+  background: var(--white);
+  border-radius: 14px;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, .22);
+  width: 100%;
+  max-width: 520px;
+  animation: modalIn .25s cubic-bezier(.2, .9, .3, 1.2);
+}
+.modal.modal-lg { max-width: 760px; }
+
+@keyframes modalIn {
+  from { opacity: 0; transform: translateY(-18px) scale(.97); }
+  to   { opacity: 1; transform: none; }
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 22px;
+  border-bottom: 1px solid var(--gray-100);
+}
+.modal-header h3 { font-size: 16px; font-weight: 600; }
+
+.modal-close {
+  background: var(--gray-100);
+  border: none;
+  width: 30px; height: 30px;
+  border-radius: 7px;
+  cursor: pointer;
+  color: var(--gray-600);
+  font-size: 16px;
+  line-height: 1;
+  transition: background .12s;
+}
+.modal-close:hover { background: var(--gray-200); }
+
+.modal-body { padding: 20px 22px; }
+
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  padding: 16px 22px;
+  border-top: 1px solid var(--gray-100);
+}
+
+/* Modal de confirmation (suppression) */
+.confirm-icon {
+  width: 52px; height: 52px;
+  margin: 0 auto 14px;
+  border-radius: 50%;
+  background: #fdeaea;
+  color: var(--red);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.confirm-icon svg { width: 24px; height: 24px; }
+.confirm-text { text-align: center; font-size: 14px; line-height: 1.5; }
+
+/* Lignes de produits dans devis / factures */
+.doc-line {
+  display: grid;
+  grid-template-columns: 1fr 90px 100px 36px;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.doc-totals { margin-top: 14px; border-top: 1px solid var(--gray-200); padding-top: 12px; }
+.doc-totals .total-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 4px 0;
+  font-size: 13.5px;
+}
+.doc-totals .total-row.grand {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--blue-dark);
+  border-top: 1px dashed var(--gray-200);
+  margin-top: 6px;
+  padding-top: 8px;
+}
