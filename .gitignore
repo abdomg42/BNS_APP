@@ -1,2 +1,10 @@
 node_modules
 dist
+
+# Données générées en développement (en production : dossier userData d'Electron)
+database/
+pdfs/
+temp/
+logs/
+uploads/images/*
+!uploads/images/logo.png

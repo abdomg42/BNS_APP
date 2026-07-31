@@ -62,8 +62,9 @@ npm run dist
 ```
 
 Génère `dist/BNS Stock Manager.exe` (version portable, aucune installation
-requise) — à copier sur n'importe quel PC Windows. La base `stock.db` est
-créée à côté de l'exécutable au premier lancement.
+requise) — à copier sur n'importe quel PC Windows. En mode packagé, toutes
+les données inscriptibles (base `stock.db`, images, sauvegardes) sont créées
+dans le dossier `userData` d'Electron : `%APPDATA%\BNS Stock Manager\`.
 
 ---
 
@@ -90,6 +91,17 @@ La base de données est **créée automatiquement** au premier démarrage
 `customers`, `quotes`, `quote_items`, `invoices`, `invoice_items`,
 `stock_movements`, `settings` — toutes reliées par clés étrangères.
 
+### Emplacement des données (dev vs production)
+
+Tous les chemins sont centralisés dans `server/paths.js` :
+
+| Mode | Assets (HTML/CSS/JS, logo) | Données inscriptibles (base, images, backups) |
+|---|---|---|
+| Dev (`npm start`, `electron .`) | racine du projet | racine du projet (`database/`, `uploads/`, …) |
+| Production (.exe packagé) | `app.asar` (lecture seule) | `userData` : `%APPDATA%\BNS Stock Manager\` |
+
+On n'écrit **jamais** dans `app.asar` (sinon erreur `ENOTDIR, not a directory`).
+
 ### Structure du projet
 
 ```
@@ -106,17 +118,16 @@ BNS-Stock/
 ├── print.html            → document imprimable / export PDF
 ├── css/                  → style.css, dashboard.css, table.css, modal.css
 ├── js/                   → app.js (layout commun), utils.js, + 1 fichier par page
-├── database/
-│   ├── stock.db          → base SQLite (créée au 1er démarrage)
-│   └── backups/          → sauvegardes automatiques
+├── database/             → (dev) stock.db + backups/ — en prod : dossier userData
 ├── server/
+│   ├── paths.js          → chemins centralisés (dev vs .exe packagé)
 │   ├── server.js         → démarrage Express + backup auto
 │   ├── routes/           → routes API (/api/...)
 │   ├── controllers/      → validation des données + réponses HTTP
 │   └── models/           → requêtes SQL (better-sqlite3)
 ├── desktop/
 │   └── main.js           → processus Electron (fenêtre de bureau)
-├── uploads/images/       → photos produits + logo entreprise
+├── uploads/images/       → (dev) photos produits + logo — en prod : userData
 └── package.json
 ```
 
@@ -139,7 +150,8 @@ BNS-Stock/
 
 ### Sauvegarde automatique
 
-La base `stock.db` est copiée dans `database/backups/` :
+La base `stock.db` est copiée dans `database/backups/` (dev) ou
+`%APPDATA%\BNS Stock Manager\database\backups\` (.exe packagé) :
 - à chaque démarrage du serveur ;
 - puis toutes les 6 heures.
 

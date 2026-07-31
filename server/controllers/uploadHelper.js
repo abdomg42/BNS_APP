@@ -1,12 +1,13 @@
 /**
  * uploadHelper.js — Enregistre une image envoyée en base64
- * dans uploads/images et renvoie son chemin public.
+ * dans le dossier images (zone inscriptible, voir server/paths.js)
+ * et renvoie son chemin public.
  * (Évite la dépendance multer : léger et suffisant ici.)
  */
 const fs = require('fs');
 const path = require('path');
+const { imagesDir, ensureDir } = require('../paths');
 
-const UPLOAD_DIR = path.join(__dirname, '..', '..', 'uploads', 'images');
 const ALLOWED = { 'image/png': '.png', 'image/jpeg': '.jpg', 'image/webp': '.webp', 'image/gif': '.gif' };
 const MAX_SIZE = 2 * 1024 * 1024; // 2 Mo
 
@@ -22,9 +23,9 @@ function saveBase64Image(dataUrl) {
   const buffer = Buffer.from(match[2], 'base64');
   if (buffer.length > MAX_SIZE) throw new Error('Image trop lourde (max 2 Mo)');
 
-  if (!fs.existsSync(UPLOAD_DIR)) fs.mkdirSync(UPLOAD_DIR, { recursive: true });
+  ensureDir(imagesDir);
   const filename = Date.now() + '-' + Math.round(Math.random() * 1e6) + ALLOWED[match[1]];
-  fs.writeFileSync(path.join(UPLOAD_DIR, filename), buffer);
+  fs.writeFileSync(path.join(imagesDir, filename), buffer);
   return '/uploads/images/' + filename;
 }
 

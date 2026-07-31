@@ -9,15 +9,22 @@
 const path = require('path');
 const fs = require('fs');
 const express = require('express');
+const paths = require('./paths');
 require('./models/db'); // initialise la base au démarrage
 
 const app = express();
 const PORT = process.env.PORT || 3002;
-const ROOT = path.join(__dirname, '..');
+const ROOT = paths.rootDir; // assets en lecture seule (peut être dans app.asar)
 
 app.use(express.json({ limit: '5mb' })); // images base64 incluses
 
-/* Fichiers statiques : pages, css, js, images */
+/* Images uploadées : zone inscriptible (userData en production) ;
+   repli sur les assets du package pour le logo par défaut
+   (express.static passe au middleware suivant si le fichier est absent). */
+app.use('/uploads', express.static(paths.uploadsDir));
+app.use('/uploads', express.static(path.join(ROOT, 'uploads')));
+
+/* Fichiers statiques : pages, css, js (assets, lecture seule) */
 app.use(express.static(ROOT));
 
 /* API REST */
@@ -35,14 +42,14 @@ app.use((err, req, res, next) => {
   res.status(400).json({ error: err.message || 'Erreur serveur' });
 });
 
-/* ---------- Sauvegarde automatique de la base ---------- */
-const DB_PATH = path.join(ROOT, 'database', 'stock.db');
-const BACKUP_DIR = path.join(ROOT, 'database', 'backups');
+/* ---------- Sauvegarde automatique de la base (zone inscriptible) ---------- */
+const DB_PATH = paths.databaseFile;
+const BACKUP_DIR = paths.backupsDir;
 
 function backupDatabase() {
   try {
     if (!fs.existsSync(DB_PATH)) return;
-    if (!fs.existsSync(BACKUP_DIR)) fs.mkdirSync(BACKUP_DIR, { recursive: true });
+    paths.ensureDir(BACKUP_DIR);
     const stamp = new Date().toISOString().replace(/[:T]/g, '-').slice(0, 16);
     fs.copyFileSync(DB_PATH, path.join(BACKUP_DIR, `stock-${stamp}.db`));
     // Garder seulement les 10 dernières sauvegardes
