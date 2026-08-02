@@ -88,8 +88,9 @@ npm run dist
 ```
 
 Génère `dist/BNS Stock Manager.exe` — version portable à copier sur n'importe quel
-PC Windows, sans installation. La base `stock.db` est créée à côté de l'exécutable
-au premier lancement.
+PC Windows, sans installation. Les données (base `stock.db`, images, sauvegardes)
+sont créées dans `%APPDATA%\BNS Stock Manager\` (dossier `userData` d'Electron) —
+jamais dans le package, qui est en lecture seule.
 
 ---
 

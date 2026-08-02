@@ -13,7 +13,7 @@ const paths = require('./paths');
 require('./models/db'); // initialise la base au démarrage
 
 const app = express();
-const PORT = process.env.PORT || 3002;
+const PORT = process.env.PORT || 3022;
 const ROOT = paths.rootDir; // assets en lecture seule (peut être dans app.asar)
 
 app.use(express.json({ limit: '5mb' })); // images base64 incluses

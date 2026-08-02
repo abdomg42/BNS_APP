@@ -1,0 +1,77 @@
+/* --- Ajouts/adaptations CSS pour coller à la mise en page "facture classique" --- */
+
+.doc-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  justify-content: space-between;
+}
+.doc-header img { height: 60px; }
+.company-title { text-align: right; }
+.company-title strong { font-size: 22px; color: #1a4b8c; display: block; }
+.company-title .tagline { font-size: 13px; color: #555; text-transform: uppercase; }
+
+.header-rule { border: none; border-top: 1px solid #ccc; margin: 10px 0 16px; }
+
+.doc-date { text-align: right; font-size: 14px; margin-bottom: 14px; }
+
+.top-boxes {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 18px;
+}
+.objet-box, .client-box {
+  flex: 1;
+  border: 1px solid #333;
+  padding: 10px 14px;
+  font-size: 14px;
+}
+.objet-box .lbl, .client-box .lbl {
+  font-weight: bold;
+  font-style: italic;
+  text-decoration: underline;
+}
+
+.doc-number {
+  text-align: center;
+  border: 1px solid #333;
+  padding: 8px;
+  font-weight: bold;
+  font-size: 16px;
+  margin-bottom: 14px;
+}
+
+table { width: 100%; border-collapse: collapse; font-size: 14px; }
+table th, table td { border: 1px solid #333; padding: 6px 10px; }
+table thead th { text-align: center; background: #f2f2f2; }
+.col-u { text-align: center; width: 50px; }
+.col-price, .col-amount { text-align: right; width: 110px; }
+table tbody td:nth-child(4) { font-weight: bold; } /* Montant en gras comme la photo */
+
+.totals-blank { border: none; }
+.totals-row .totals-label { text-align: right; font-weight: bold; }
+.totals-row .col-amount { font-weight: bold; }
+
+.grand-row td { border-top: 2px solid #333; }
+.grand-label { text-align: center; font-weight: bold; font-size: 15px; }
+.grand-amount { font-weight: bold; font-size: 15px; }
+
+.in-words { margin: 18px 0 8px; font-size: 14px; }
+.in-words .lbl { font-style: italic; }
+.in-words .words { font-weight: bold; text-transform: uppercase; }
+
+.payment-line {
+  text-align: center;
+  font-weight: bold;
+  margin: 8px 0 18px;
+  text-transform: uppercase;
+}
+
+.doc-footer {
+  border-top: 1px solid #ccc;
+  padding-top: 8px;
+  margin-top: 24px;
+  font-size: 11px;
+  color: #1a4b8c;
+  text-align: center;
+}
