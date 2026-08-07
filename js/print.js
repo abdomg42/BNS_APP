@@ -113,15 +113,17 @@ function downloadPDF() {
       paymentLine = `<div class="payment-line">PAYÉ PAR ${method}${ref}</div>`;
     }
 
+    const tagline = escapeHtml(settings.company_tagline || 'VENTE DE MATERIELS DE SPORT');
+
     sheet.innerHTML = `
       <div class="doc-header">
-        <img src="${escapeHtml(logo)}" alt="Logo" onerror="this.style.display='none'">
+        <div class="logo-wrap">
+          <img src="${escapeHtml(logo)}" alt="Logo" onerror="this.style.display='none'">
+        </div>
         <div class="company-title">
-          <strong>${escapeHtml(settings.company_name || '')}</strong>
-          ${settings.company_tagline ? `<span class="tagline">${escapeHtml(settings.company_tagline)}</span>` : ''}
+          <span class="tagline">${tagline}</span>
         </div>
       </div>
-      <hr class="header-rule">
 
       <div class="doc-date">${escapeHtml(cityLabel)} le : <strong>${docDate}</strong></div>
 
@@ -141,7 +143,7 @@ function downloadPDF() {
 
       <table>
         <thead><tr>
-          <th class="col-u">U</th><th>Désignation</th><th class="col-price">Prix d'unité</th><th class="col-amount">Montant</th>
+          <th class="col-u">U</th><th>Désignation</th><th class="col-price">Prix d'unité</th><th class="col-amount">MONTANT</th>
         </tr></thead>
         <tbody>
           ${doc.items.map(it => `<tr>

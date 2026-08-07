@@ -1,77 +1,250 @@
-/* --- Ajouts/adaptations CSS pour coller à la mise en page "facture classique" --- */
+/* --- Mise en page du document imprimable (facture / devis) --- */
 
+.sheet {
+  position: relative;
+  min-height: 260mm;
+  padding-bottom: 34mm;
+  background: #fff;
+  color: #000;
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+/* ---------- Header ---------- */
 .doc-header {
   display: flex;
-  align-items: center;
-  gap: 16px;
+  align-items: flex-start;
   justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 10px;
 }
-.doc-header img { height: 60px; }
-.company-title { text-align: right; }
-.company-title strong { font-size: 22px; color: #1a4b8c; display: block; }
-.company-title .tagline { font-size: 13px; color: #555; text-transform: uppercase; }
 
-.header-rule { border: none; border-top: 1px solid #ccc; margin: 10px 0 16px; }
+.doc-header .logo-wrap {
+  flex: 0 0 auto;
+}
 
-.doc-date { text-align: right; font-size: 14px; margin-bottom: 14px; }
+.doc-header img {
+  max-height: 70px;
+  max-width: 180px;
+  object-fit: contain;
+  display: block;
+}
 
+.doc-header .company-title {
+  flex: 1 1 auto;
+  text-align: right;
+  padding-top: 4px;
+}
+
+.company-title .main-name {
+  font-size: 42px;
+  font-weight: 700;
+  color: #1e6fd9;
+  letter-spacing: 2px;
+  line-height: 1;
+  display: block;
+  margin-bottom: 6px;
+}
+
+.company-title .tagline {
+  font-size: 20px;
+  color: #1e6fd9;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  font-weight: 700;
+  display: block;
+}
+
+.doc-date {
+  text-align: right;
+  font-size: 13px;
+  margin-bottom: 16px;
+}
+
+.doc-date strong {
+  font-weight: 600;
+}
+
+/* ---------- Encadrés Objet / Client ---------- */
 .top-boxes {
   display: flex;
   gap: 16px;
-  margin-bottom: 18px;
+  margin-bottom: 16px;
 }
-.objet-box, .client-box {
-  flex: 1;
-  border: 1px solid #333;
+
+.objet-box,
+.client-box {
+  flex: 1 1 50%;
+  border: 1.5px solid #333;
+  border-radius: 0;
   padding: 10px 14px;
-  font-size: 14px;
+  font-size: 13px;
+  min-height: 60px;
 }
-.objet-box .lbl, .client-box .lbl {
-  font-weight: bold;
+
+.objet-box .lbl,
+.client-box .lbl {
+  font-weight: 700;
   font-style: italic;
   text-decoration: underline;
+  margin-right: 4px;
 }
 
-.doc-number {
-  text-align: center;
-  border: 1px solid #333;
-  padding: 8px;
-  font-weight: bold;
-  font-size: 16px;
-  margin-bottom: 14px;
-}
-
-table { width: 100%; border-collapse: collapse; font-size: 14px; }
-table th, table td { border: 1px solid #333; padding: 6px 10px; }
-table thead th { text-align: center; background: #f2f2f2; }
-.col-u { text-align: center; width: 50px; }
-.col-price, .col-amount { text-align: right; width: 110px; }
-table tbody td:nth-child(4) { font-weight: bold; } /* Montant en gras comme la photo */
-
-.totals-blank { border: none; }
-.totals-row .totals-label { text-align: right; font-weight: bold; }
-.totals-row .col-amount { font-weight: bold; }
-
-.grand-row td { border-top: 2px solid #333; }
-.grand-label { text-align: center; font-weight: bold; font-size: 15px; }
-.grand-amount { font-weight: bold; font-size: 15px; }
-
-.in-words { margin: 18px 0 8px; font-size: 14px; }
-.in-words .lbl { font-style: italic; }
-.in-words .words { font-weight: bold; text-transform: uppercase; }
-
-.payment-line {
-  text-align: center;
-  font-weight: bold;
-  margin: 8px 0 18px;
+.client-box strong {
+  font-weight: 700;
   text-transform: uppercase;
 }
 
-.doc-footer {
-  border-top: 1px solid #ccc;
-  padding-top: 8px;
-  margin-top: 24px;
-  font-size: 11px;
-  color: #1a4b8c;
+/* ---------- Numéro de document ---------- */
+.doc-number {
   text-align: center;
+  border: 1.5px solid #333;
+  padding: 8px 12px;
+  font-weight: 700;
+  font-size: 15px;
+  text-transform: uppercase;
+  margin: 0 auto 16px;
+  max-width: 360px;
+}
+
+/* ---------- Tableau ---------- */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  margin-bottom: 6px;
+}
+
+table th,
+table td {
+  border: 1px solid #333;
+  padding: 5px 10px;
+  vertical-align: top;
+}
+
+table thead th {
+  text-align: center;
+  background: #fff;
+  font-weight: 700;
+}
+
+table thead th.col-amount {
+  text-transform: uppercase;
+}
+
+.col-u {
+  text-align: center;
+  width: 46px;
+}
+
+.col-price,
+.col-amount {
+  text-align: right;
+  width: 110px;
+}
+
+table tbody td:nth-child(4) {
+  font-weight: 700;
+}
+
+/* Lignes de totaux */
+.totals-blank {
+  border: none;
+}
+
+.totals-row .totals-label {
+  text-align: right;
+  font-weight: 700;
+  border-left: none;
+  border-bottom: 1px solid #333;
+}
+
+.totals-row .col-amount {
+  font-weight: 700;
+}
+
+.grand-row td {
+  border-top: 2px solid #333;
+}
+
+.grand-label {
+  text-align: center;
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.grand-amount {
+  font-weight: 700;
+  font-size: 14px;
+}
+
+/* ---------- Montant en lettres ---------- */
+.in-words {
+  margin: 16px 0 8px;
+  font-size: 13px;
+}
+
+.in-words .lbl {
+  font-style: italic;
+}
+
+.in-words .words {
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+/* ---------- Paiement ---------- */
+.payment-line {
+  text-align: center;
+  font-weight: 700;
+  margin: 8px 0 0;
+  text-transform: uppercase;
+  font-size: 13px;
+}
+
+/* ---------- Footer fixe en bas de page ---------- */
+.doc-footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  border: 1.5px solid #1e6fd9;
+  border-radius: 6px;
+  padding: 10px 14px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #1e6fd9;
+  text-align: center;
+  line-height: 1.5;
+  background: #f7fbff;
+  text-transform: uppercase;
+}
+
+/* ---------- Impression / PDF ---------- */
+@media print {
+  body {
+    background: #fff;
+  }
+
+  .toolbar {
+    display: none;
+  }
+
+  .sheet {
+    box-shadow: none;
+    margin: 0;
+    max-width: none;
+    min-height: auto;
+    padding-bottom: 28mm;
+    page-break-after: avoid;
+  }
+
+  .doc-footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    border: 1.5px solid #1e6fd9;
+    background: #f7fbff;
+  }
 }
