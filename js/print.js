@@ -113,32 +113,30 @@ function downloadPDF() {
       paymentLine = `<div class="payment-line">PAYÉ PAR ${method}${ref}</div>`;
     }
 
-    const tagline = escapeHtml(settings.company_tagline || 'VENTE DE MATERIELS DE SPORT');
+    const tagline = escapeHtml(settings.company_tagline || 'Exiger la qualité');
+    const companyPhone = escapeHtml(settings.company_phone || '+212 667 618 344');
+    const companyEmail = escapeHtml(settings.company_email || 'bnsport.1440@gmail.com');
 
     sheet.innerHTML = `
-      <div class="doc-header">
-        <div class="logo-wrap">
-          <img src="${escapeHtml(logo)}" alt="Logo" onerror="this.style.display='none'">
+    
+    <div class="doc-header">
+    <div class="company-left">
+    <img src="${escapeHtml(logo)}" alt="Logo" class="big-logo" onerror="this.style.display='none'">
+          <div class="company-name">BNS SPORT</div>
+          <div class="company-tagline">${tagline}</div>
+          <div class="company-contact">
+            TEL: ${companyPhone}<br>
+            E-mail: ${companyEmail}
+          </div>
         </div>
-        <div class="company-title">
-          <span class="tagline">${tagline}</span>
-        </div>
-      </div>
-
-      <div class="doc-date">${escapeHtml(cityLabel)} le : <strong>${docDate}</strong></div>
-
-      <div class="top-boxes">
-        <div class="objet-box">
-          <span class="lbl">Objet :</span> ${escapeHtml(objet)}
-        </div>
-        <div class="client-box">
-          <span class="lbl">Client :</span> <strong>${escapeHtml(doc.customer_name)}</strong><br>
-          ${doc.customer_address ? escapeHtml(doc.customer_address).replace(/\n/g, '<br>') + '<br>' : ''}
-          ${doc.customer_phone ? 'Tél : ' + escapeHtml(doc.customer_phone) + '<br>' : ''}
-          ${doc.customer_email ? escapeHtml(doc.customer_email) : ''}
-        </div>
-      </div>
-
+        <div class="client-right">
+        <table class="client-table">
+            <tr><td class="client-label">Client</td><td class="client-value">${escapeHtml(doc.customer_name)}</td></tr>
+            </table>
+            </div>
+            </div>
+            
+            <div class="doc-date">${escapeHtml(cityLabel)} le : <strong>${docDate}</strong></div>
       <div class="doc-number">${title} N° : ${escapeHtml(doc.number)}</div>
 
       <table>
@@ -183,14 +181,10 @@ function downloadPDF() {
 
       <div class="doc-footer">
         ${escapeHtml(settings.company_name || '')} SARL AU CAPITAL DE ${escapeHtml(settings.company_capital || '100.000')} Dh
-        sis au ${escapeHtml(settings.company_address || '')}
+       ${escapeHtml(settings.company_address || '')} <br>
         ${settings.company_phone ? 'gsm ' + escapeHtml(settings.company_phone) : ''}
-        <br>${escapeHtml(cityLabel)} Maroc
-        ${settings.company_if ? ' - IF : ' + escapeHtml(settings.company_if) : ''}
-        ${settings.company_rc ? ' - RC : ' + escapeHtml(settings.company_rc) : ''}
-        ${settings.company_ice ? ' - ICE : ' + escapeHtml(settings.company_ice) : ''}
+        Boulevard Modibo keita N° 16 ( en Face de Cinema El baida) - Casablanca Maroc
         ${settings.company_patente ? ' - Patente : ' + escapeHtml(settings.company_patente) : ''}
-        ${type === 'quote' ? '<br>Devis valable 30 jours sauf mention contraire.' : ''}
       </div>`;
 
     // Ouvre automatiquement la boîte d'impression après chargement des images
